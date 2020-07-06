@@ -1,0 +1,66 @@
+
+
+import java.io.*;  
+import java.util.Scanner;  
+public class split { 
+	
+public static void main(String args[])  
+{  
+ try{  
+
+  String inputfile = "C:\\Users\\ARJUN\\cv\\test01.log";  
+  double nol = 2000.0;  
+  //spliting file for every 2000 lines
+  File file = new File(inputfile);  
+  Scanner scanner = new Scanner(file);  
+  int count = 0;  
+  while (scanner.hasNextLine())   
+  {  
+   scanner.nextLine();  
+   count++;  
+  }  
+  System.out.println("Lines in the file: " + count);   
+
+  double temp = (count/nol);  
+  int temp1=(int)temp;  
+  int nof=0;  
+  if(temp1==temp)  
+  {  
+   nof=temp1;  
+  }  
+  else  
+  {  
+   nof=temp1+1;  
+  }  
+  System.out.println("No. of files to be generated :"+nof); 
+
+  FileInputStream fstream = new FileInputStream(inputfile); DataInputStream in = new DataInputStream(fstream);  
+
+  BufferedReader br = new BufferedReader(new InputStreamReader(in)); String strLine;  
+
+  for (int j=1;j<=nof;j++)  
+  {  
+   FileWriter fstream1 = new FileWriter("C:/Users/ARJUN/cv/Split/"+j+".txt");    
+   BufferedWriter out = new BufferedWriter(fstream1);   
+   for (int i=1;i<=nol;i++)  
+   {  
+    strLine = br.readLine();   
+    if (strLine!= null)  
+    {  
+     out.write(strLine);   
+     if(i!=nol)  
+     {  
+      out.newLine();  
+     }  
+    }  
+   }  
+   out.close();  
+  }  
+  scanner.close();
+  in.close();  
+ }catch (Exception e)  
+ {  
+  System.err.println("Error: " + e.getMessage());  
+ } 
+}
+}

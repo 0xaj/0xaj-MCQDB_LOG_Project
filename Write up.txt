@@ -1,0 +1,46 @@
+
+Initial Research:
+
+After having read many articles on handling large amount of data, I first tried to use distributed cluster computing framework spark to solve this.
+But it took longer time than expected to initialize. So, I focused on other solutions like using a B+ tree on the file to search and extract
+the log files, took 1.3 seconds to extract the dates of a file of 60000 lines.
+
+Considering that the problem statement involves printing the logs between two given time ranges which are spread across multiple log files, 
+And also taking into account that each file is of 16GB which cannot be loaded completely in RAM.
+
+
+I came up with these approaches
+
+
+1.Finding the files which are between the two dates becomes difficult for such huge amount of data, making a B+ tree structure on the data 
+which was very efficient than my previous approach, as the time stamps can be between any two files such the we can print all the nodes
+from the starting date to ending date.
+ 
+
+2. So I tried using B+ indexing to  find the files between the given time range and print all the data from each log file that comes under the
+   given range using java scanner(As it doesn’t load the file in memory).
+
+ 
+
+3. But Since I have a RAM of (4GB) .The tree construction was crashing my system as I'm using JAVA and the size of tree cannot load more
+   than 2000 lines.But I was able to extract the files in 0.212 seconds for a file of 10000 lines, when I performed linear search the file it 
+   took about 4 seconds to this process.Since this was more optimized but the capacity was limited , I tried partition on the file.
+
+ 
+
+4.The next approach I came up with was to split the files into smaller parts( I did a split for every 2000 lines). We can split for a higher
+  number depending upon our RAM size.
+
+ 
+
+5.Then I performed a binary search to find the start and end dates.
+
+ 
+
+6.I have handled all the cases.  Where the start and end times are in the same file and when they are spread across many files.
+
+ 
+
+ The codes for all my research and final solution are int the Source Code text file.
+
+ 
